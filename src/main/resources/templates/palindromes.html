@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns:hx="http://www.w3.org/1999/xhtml">
+<head>
+    <title>PAAS - Palidromes as a service</title>
+    <link rel="stylesheet" href="/css/output.css">
+
+    <style>
+        .card {
+            border: #333;
+            border-radius: 4px;
+            width: 275px;
+            min-height: 200px;
+            box-shadow: 3px 3px 5px #000;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .card .palindrome {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+    <script src="https://unpkg.com/htmx.org@1.8.0"></script>
+</head>
+<body class="bg-gray-5">
+<h1>PAAS : Palindromes as a Service</h1>
+<div style="display: flex; flex-direction: row; gap: 20px;">
+    <div class="card" th:fragment="randomPalindrome" id="randomPalindromeCard" hx-swap="outerHTML" hx-target="#randomPalindromeCard">
+        <h2>Random Palindrome</h2>
+        <div class="palindrome" th:text="${p.text}">racecar</div>
+        <div>
+            <a style="cursor: pointer; color: blue;" hx-get="/palindromes/random" >See another random palindrome</a><br>
+            <button hx:post="'/palindromes/vote/'+${p.normalized}"  title="Vote up!">Up vote: <span th:text="${p.votes}">10</span></button>
+        </div>
+
+    </div>
+
+    <div class="card" th:fragment="topPalindromes" id="topPalindromes" hx-swap="outerHTML" hx-target="#topPalindromes">
+        <h2>Top palindromes</h2>
+        <ul hx-get="/palindromes/top" hx:trigger="${topPalidromeTrigger + ', voteAdded from:body'}">
+            <li th:each="pal : ${topPalindromes}">
+                <span  th:text="${pal.text}">mom</span> (<span th:text="${pal.votes}"></span>)
+            </li>
+        </ul>
+    </div>
+
+    <div class="card" th:fragment="addForm" id="addFormCard">
+        <h2>Add a palindrome</h2>
+        <div style="color: green" th:text="${addMessage}"></div>
+
+        <form hx-post="/palindromes" hx-target="#addFormCard" hx-swap="outerHTML" >
+            <div th:class="${#fields.hasErrors('form.palindromeText')}? error" hx-target="this" th:fragment="palindromeTextField" >
+                <label for="palindromeText">Text:</label>
+                <input id="palindromeText" th:field="${form.palindromeText}" hx-post="/palindromes" />
+                <ul ><li th:each="err : ${#fields.errors('form.palindromeText')}" th:text="${err}" class="error" /></ul>
+            </div>
+            <div th:class="${#fields.hasErrors('form.submitter')}? error" hx-target="this" th:fragment="submitterField" >
+                <label for="submitter">Submitter:</label>
+                <input id="submitter" th:field="${form.submitter}" hx-post="/palindromes" />
+                <ul ><li th:each="err : ${#fields.errors('form.submitter')}" th:text="${err}" class="error" /></ul>
+            </div>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</div>
+
+</body>
+
+
+</html>

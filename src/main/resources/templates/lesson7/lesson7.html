@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thymeleaf example</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/shoelace-autoloader.js"></script>
+
+    <style>
+        :not(:defined) {
+            visibility: hidden;
+        }
+    </style>
+
+</head>
+
+<body class="max-w-3xl m-auto grid grid-cols-3">
+<div id="sidebar">
+    <h1>Food Groups</h1>
+    <div class="flex flex-col">
+        <a th:each="group:${groups}" th:href="@{/example7/{groupName}(groupName=${group.key})}">
+            <span th:text="${group.key}">meat</span> (<span th:text="${group.value}"></span>)
+        </a>
+    </div>
+</div>
+
+<div th:if="${groupName}">
+    <h1 th:text="${groupName}">Chinese</h1>
+    <div th:each="food:${group}">
+        <div><span class="font-bold">Name</span><span th:text="${food.name}">Ham</span></div>
+        <div><span class="font-bold">Price</span><span th:text="${#numbers.formatCurrency(food.price)}">$0.02</span></div>
+    </div>
+</div>
+
+<div>
+    <form action="/example7" method="post">
+        <fieldset>
+            <label for="name">Name</label>
+            <input class="border" id="name" name="name" />
+        </fieldset>
+        <fieldset>
+            <label for="price">Price</label>
+            <input class="border" id="price" name="price" />
+        </fieldset>
+        <fieldset>
+            <label for="group">Group</label>
+            <input class="border" id="group" name="group" />
+        </fieldset>
+        <button class="btn-primary" type="submit">Update</button>
+    </form>
+</div>
+
+
+</body>
+</html>

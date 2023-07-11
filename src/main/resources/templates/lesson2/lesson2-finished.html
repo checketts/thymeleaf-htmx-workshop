@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thymeleaf example</title>
+<!--    <link rel="stylesheet" href="/css/output.css">-->
+</head>
+<body>
+
+<form action="/example2-finished">
+    <h1 th:unless="${#strings.isEmpty(name)}" class="" >Welcome: <span th:text="${name}"></span></h1>
+    <div>
+        <label>Name:</label>
+        <input name="name" th:value="${name}">
+        <div th:each="err: ${#fields.errors('person.name')}"
+             class="error-text">
+            <span th:text="${err}"></span>
+        </div>
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thymeleaf example</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/shoelace-autoloader.js"></script>
+
+    <style>
+        :not(:defined) {
+            visibility: hidden;
+        }
+    </style>
+
+</head>
+
+<body class="max-w-3xl m-auto">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mJ_fkw5j-t0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+<div>
+    <h1>Total: <span  th:text="${total}">0</span></h1>
+    <a th:href="@{/example6-finished(total=${total + 1})}" th:if="${total < 10}" >Count up</a>
+    <a th:href="@{/example6-finished(total=${total - 1})}" th:if="${total > 0}" >Count down</a>
+</div>
+
+
+</body>
+</html>

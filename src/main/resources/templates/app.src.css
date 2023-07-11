@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.error-text {
+    @apply text-danger-60
+}
+
+.error-text select, .error-text input, .input-error {
+    @apply border border-danger-60 outline outline-danger-60
+}

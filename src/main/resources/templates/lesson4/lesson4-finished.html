@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thymeleaf example</title>
+<!--    <link rel="stylesheet" href="/css/output.css">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/shoelace-autoloader.js"></script>
+
+    <style>
+        :not(:defined) {
+            visibility: hidden;
+        }
+    </style>
+
+</head>
+<body>
+
+<div th:remove="all">
+    <th:block th:fragment="header(name,icon,description)">
+        <h1><span th:text="${name}">The title</span> <sl-tooltip th:content="${description}"><sl-icon th:name="${icon}"></sl-icon></sl-tooltip></h1>
+    </th:block>
+</div>
+
+
+<div th:replace=":: header('Menu items', 'apple', 'Yummy!')"></div>
+<div th:each="item : ${menuItems}">
+    <span th:text="${item.name}">Burger</span>
+    <span th:text="${#numbers.formatCurrency(item.price)}">$1.23</span>
+</div>
+<div th:replace=":: header('On sale!', 'apple', 'Buy things!')"></div>
+
+</body>
+</html>

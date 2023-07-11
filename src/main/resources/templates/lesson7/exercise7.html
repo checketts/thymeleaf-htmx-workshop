@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thymeleaf example</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/shoelace-autoloader.js"></script>
+
+    <style>
+        :not(:defined) {
+            visibility: hidden;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div id="navAndDetails" th:fragment="navAndDetails">
+    <div>
+        <a th:each="s: ${students}" slot="nav" th:text="${s.name}"
+           th:classappend="${s.id == id ? 'font-bold': ''}"
+           th:href="@{/exercise6/{id}(id=${s.id})}">Arnold</a>
+    </div>
+
+    <div id="studentDetails" th:fragment="studentDetails">
+        <div>
+            <div>Name:</div>
+            <div th:text="${student.name}">Arnold</div>
+        </div>
+        <div>
+            <div>Math Grade:</div>
+            <div th:text="${student.mathGrade}">4.0</div>
+        </div>
+        <div>
+            <div>English Grade:</div>
+            <div th:text="${student.englishGrade}">4.0</div>
+        </div>
+
+        <div>
+            <div>Science Grade:</div>
+            <div th:text="${student.scienceGrade}">4.0</div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

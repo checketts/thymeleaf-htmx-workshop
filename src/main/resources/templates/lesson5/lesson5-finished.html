@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thymeleaf example</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.2/cdn/shoelace-autoloader.js"></script>
+
+    <style>
+        :not(:defined) {
+            visibility: hidden;
+        }
+    </style>
+
+</head>
+<body class="m-2 md:m-20">
+
+<div class="flex flex-col md:flex-row md:justify-between">
+    <div th:unless="${#strings.isEmpty(food.name)}" class="flex flex-col">
+        <div class="md:grid md:grid-cols-2">
+            <h1 class="text-lg font-bold m-2">Name:</h1>
+            <h1 class="m-2" th:text="${food.name}">Burger</h1>
+        </div>
+        <div class="">
+            <div>Price:</div>
+            <div th:text="${#numbers.formatCurrency(food.price)}">$1.25</div>
+            <div th:text="|(${food.group})|">(Meat)</div>
+        </div>
+    </div>
+
+    <sl-details summary="Edit details" th:open="${#strings.isEmpty(food.name) ? 'true': 'false'}">
+        <form action="/example5-finished">
+            <th:block th:remove="all">
+                <fieldset th:fragment="field(name, label, value)" class="flex flex-col md:flex-row">
+                    <label th:for="${name}" th:text="${label}" class="md:min-w-10 m-2">Food Name</label>
+                    <input class="border border-blue-10 m-2" th:id="${name}" th:name="${name}" th:value="${value}" />
+                </fieldset>
+            </th:block>
+
+            <th:block th:replace=":: field('name', 'Food name', ${food.name})"></th:block>
+            <th:block th:replace=":: field('price', 'Price', ${food.price})"></th:block>
+            <th:block th:replace=":: field('group', 'Group', ${food.group})"></th:block>
+
+            <button class="btn-primary" type="submit">Update</button>
+
+        </form>
+    </sl-details>
+</div>
+
+
+</body>
+</html>
